@@ -1,5 +1,6 @@
 const models = {
-	userModel: require('./sql/user'),
+	userModel: import('./sql/user.js'),
+	storageModel: import('./sql/storage.js'),
 };
 
-module.exports = models;
+export default models;

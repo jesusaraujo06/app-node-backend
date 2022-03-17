@@ -1,20 +1,20 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+const routerUser = Router();
 
 // Controlador
-const {
+import {
 	getItems,
 	getItem,
 	createItem,
 	updateItem,
 	deleteItem,
-} = require('../controllers/users');
+} from '../controllers/users';
 
 // Rutas
-router.get('/', getItems);
-router.get('/:id', getItem);
-router.post('/create', createItem);
-router.patch('/:id', updateItem);
-router.delete('/id', deleteItem);
+routerUser.get('/', getItems);
+routerUser.get('/:id', getItem);
+routerUser.post('/create', createItem);
+routerUser.patch('/:id', updateItem);
+routerUser.delete('/id', deleteItem);
 
-module.exports = router;
+export default routerUser;

@@ -1,5 +1,5 @@
 // Modelo
-import { userModel } from '../models/index.js';
+import models from '../models/index.js';
 
 /**
  * Obtener lista de la base de datos
@@ -23,9 +23,12 @@ const getItem = (req, res) => {};
  * @param {*} res
  */
 const createItem = async (req, res) => {
-	const { body } = req;
-	const result = await userModel.insert(body);
-	res.json(result);
+	const { body, file } = req;
+	const fileData = {
+		filename: file.filename,
+	};
+	// const result = await storageModel.insert(body);
+	res.json({ file });
 };
 
 /**

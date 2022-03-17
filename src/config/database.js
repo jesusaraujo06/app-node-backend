@@ -1,7 +1,7 @@
-const mysql = require('mysql2');
+import { createPool } from 'mysql2';
 
 // Conexión pool para obtener un mejor rendimiento
-const pool = mysql.createPool({
+const pool = createPool({
 	host: process.env.DB_HOST,
 	database: process.env.DB_DATABASE,
 	port: process.env.DB_PORT,
@@ -23,4 +23,4 @@ promisePool.getConnection((err, connection) => {
 	console.log('Server conectado a la DB');
 });
 
-module.exports = { promisePool, mysql };
+export default { promisePool };

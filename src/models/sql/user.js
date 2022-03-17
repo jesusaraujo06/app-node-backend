@@ -1,4 +1,4 @@
-const { promisePool, mysql } = require('../../config/database');
+import { promisePool, mysql } from '../../config/database';
 
 const insert = async ({ user, clave }) => {
 	const query = 'INSERT INTO usuario (user, clave) VALUES (?, ?)';
@@ -8,6 +8,6 @@ const insert = async ({ user, clave }) => {
 	return execute;
 };
 
-module.exports = {
+export default {
 	insert,
 };
