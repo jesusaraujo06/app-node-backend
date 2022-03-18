@@ -1,5 +1,5 @@
 // Modelo
-import models from '../models/index.js';
+import { storageModel } from '../models/index.cjs';
 
 /**
  * Obtener lista de la base de datos

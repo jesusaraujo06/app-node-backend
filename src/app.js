@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 config();
 import express from 'express';
 import cors from 'cors';
-import router from './routes/index.js';
+import router from './routes/index.cjs';
 
 const app = express();
 

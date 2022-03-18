@@ -1,5 +1,5 @@
 // Modelo
-import { userModel } from '../models/index.js';
+import { userModel } from '../models/index.cjs';
 
 /**
  * Obtener lista de la base de datos

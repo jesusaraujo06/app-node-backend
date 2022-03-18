@@ -1,4 +1,4 @@
-import { promisePool, mysql } from '../../config/database';
+import { promisePool, mysql } from '../../config/database.js';
 
 const insert = async ({ user, clave }) => {
 	const query = 'INSERT INTO usuario (user, clave) VALUES (?, ?)';
