@@ -17,4 +17,12 @@ const validatorStore = [
 	},
 ];
 
-module.exports = { validatorStore };
+const validatorShow = [
+	check('id').exists().notEmpty(),
+
+	(req, res, next) => {
+		return validateResults(req, res, next);
+	},
+];
+
+module.exports = { validatorStore, validatorShow };

@@ -23,14 +23,14 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 // Mostrar datos json en consola
 app.use(express.json());
+// Determinar archivos estaticos
+app.use(express.static('src/storage'));
 // Habilitar router
 app.use('/api', apiRouter);
 app.use('/', webRouter);
-// Determinar archivos estaticos
-app.use(express.static('src/storage'));
 
 /**
- * * Ejecutación
+ * * Ejecución
  */
 app.listen(port, () => {
 	console.log(`Servidor corriendo en el puerto ${port}`);

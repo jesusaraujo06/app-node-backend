@@ -1,13 +1,19 @@
 // Modelo
 const { StorageModel } = require('../models/index');
+const { httpError } = require('../utils/handleError');
 
 /**
  * Obtener todos los registros
  * @param {*} req
  * @param {*} res
  */
-const index = (req, res) => {
-	res.send({ usersExample: [1, 2, 3] });
+const index = async (req, res) => {
+	try {
+		const result = await StorageModel.all();
+		res.send({ result });
+	} catch (err) {
+		httpError(res, 'ERROR_GET_ITEMS', 403);
+	}
 };
 
 /**
@@ -15,7 +21,7 @@ const index = (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const show = (req, res) => {};
+const show = async (req, res) => {};
 
 /**
  * Insertar un registro
@@ -23,12 +29,17 @@ const show = (req, res) => {};
  * @param {*} res
  */
 const store = async (req, res) => {
-	const { body, file } = req;
-	const fileData = {
-		filename: file.filename,
-	};
-	const result = await StorageModel.create(body);
-	res.json(file);
+	try {
+		const { file } = req;
+		const body = {
+			filename: file.filename,
+			url: `${process.env.APP_URI}/${file.filename}`,
+		};
+		const result = await StorageModel.create(body);
+		res.send({ result });
+	} catch (err) {
+		httpError(res, 'ERROR_CREATE_ITEM', 403);
+	}
 };
 
 /**
@@ -36,14 +47,14 @@ const store = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const update = (req, res) => {};
+const update = async (req, res) => {};
 
 /**
  * Eliminar un registro
  * @param {*} req
  * @param {*} res
  */
-const destroy = (req, res) => {};
+const destroy = async (req, res) => {};
 
 module.exports = {
 	index,

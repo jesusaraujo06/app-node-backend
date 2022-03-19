@@ -1,17 +1,16 @@
 // Modelo
-const { matchedData } = require('express-validator');
 const { UserModel } = require('../models/index');
 const { httpError } = require('../utils/handleError');
+const { matchedData } = require('express-validator');
 
 /**
  * Obtener todos los registros
  * @param {*} req
  * @param {*} res
  */
-const index = (req, res) => {
+const index = async (req, res) => {
 	try {
-		const items = { item1: 'Jesus', item2: 'Leifer' };
-		const result = items;
+		const result = await UserModel.all();
 		res.send({ result });
 	} catch (err) {
 		httpError(res, 'ERROR_GET_ITEMS', 403);
@@ -23,7 +22,16 @@ const index = (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const show = (req, res) => {};
+const show = async (req, res) => {
+	try {
+		const body = matchedData(req);
+		const { id } = body;
+		const result = await UserModel.find(id);
+		res.send({ result });
+	} catch (err) {
+		httpError(res, 'ERROR_GET_ITEM');
+	}
+};
 
 /**
  * Insertar un registro
@@ -36,7 +44,7 @@ const store = async (req, res) => {
 		const result = await UserModel.create(body);
 		res.send({ result });
 	} catch (err) {
-		httpError(res, 'ERROR_CREATE_ITEMS', 403);
+		httpError(res, 'ERROR_CREATE_ITEM', 403);
 	}
 };
 
@@ -45,14 +53,36 @@ const store = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const update = (req, res) => {};
+const update = async (req, res) => {
+	try {
+		// De un objeto creamos dos objetos, uno que solo va a tener el id y otro que tendra el resto de elementos del objeto
+		const { id, ...body } = matchedData(req);
+		const result = await UserModel.findOneAndUpdate(
+			id,
+			body
+		);
+		res.send({ result });
+	} catch (err) {
+		httpError(res, 'ERROR_CREATE_ITEM', 403);
+	}
+};
 
 /**
  * Eliminar un registro
  * @param {*} req
  * @param {*} res
  */
-const destroy = (req, res) => {};
+const destroy = async (req, res) => {
+	try {
+		const body = matchedData(req);
+		const { id } = body;
+		// Con deleteOne se hará un borrado logico, para destruir un registro utilizar destroy()
+		const result = await UserModel.deleteOne(id);
+		res.send({ result });
+	} catch (err) {
+		httpError(res, 'ERROR_DELETE_ITEM', 403);
+	}
+};
 
 module.exports = {
 	index,

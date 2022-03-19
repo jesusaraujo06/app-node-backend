@@ -42,7 +42,7 @@ webRouter.get('/', (req, res) => {
 // En caso de que no se encuentre ninguna ruta
 webRouter.get('*', (req, res) => {
 	res.status(404);
-	res.send({ error: 'Ruta no encontrada' });
+	res.send({ error: 'Ruta no encontrada WEB' });
 });
 
 module.exports = webRouter;

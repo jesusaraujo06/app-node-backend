@@ -7,6 +7,7 @@ const StorageController = require('../../controllers/Storage');
 const uploadMiddleware = require('../../utils/HandleStorage');
 
 // Rutas
+router.get('/', StorageController.index);
 router.post(
 	'/single',
 	uploadMiddleware.single('myfile'),
