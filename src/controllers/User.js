@@ -1,5 +1,7 @@
 // Modelo
+const { matchedData } = require('express-validator');
 const { UserModel } = require('../models/index');
+const { httpError } = require('../utils/handleError');
 
 /**
  * Obtener todos los registros
@@ -7,7 +9,13 @@ const { UserModel } = require('../models/index');
  * @param {*} res
  */
 const index = (req, res) => {
-	res.send({ usersExample: [1, 2, 3] });
+	try {
+		const items = { item1: 'Jesus', item2: 'Leifer' };
+		const result = items;
+		res.send({ result });
+	} catch (err) {
+		httpError(res, 'ERROR_GET_ITEMS', 403);
+	}
 };
 
 /**
@@ -23,9 +31,13 @@ const show = (req, res) => {};
  * @param {*} res
  */
 const store = async (req, res) => {
-	const { body } = req;
-	const result = await UserModel.create(body);
-	res.json(result);
+	try {
+		const body = matchedData(req);
+		const result = await UserModel.create(body);
+		res.send({ result });
+	} catch (err) {
+		httpError(res, 'ERROR_CREATE_ITEMS', 403);
+	}
 };
 
 /**

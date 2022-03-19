@@ -5,7 +5,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const router = require('./routes/index');
+const apiRouter = require('./routes/api/index');
+const webRouter = require('./routes/web/index');
 
 /**
  * * Variables
@@ -23,7 +24,8 @@ app.use(cors());
 // Mostrar datos json en consola
 app.use(express.json());
 // Habilitar router
-app.use('/api', router);
+app.use('/api', apiRouter);
+app.use('/', webRouter);
 // Determinar archivos estaticos
 app.use(express.static('src/storage'));
 

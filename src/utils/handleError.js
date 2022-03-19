@@ -1,4 +1,10 @@
-const httpError = (res, err) => {
-	res.status(500);
-	res.send({ error: 'Algo ocurrio' });
+const httpError = (
+	res,
+	message = 'Algo sucedio',
+	code = 403
+) => {
+	res.status(code);
+	res.send({ error: message });
 };
+
+module.exports = { httpError };

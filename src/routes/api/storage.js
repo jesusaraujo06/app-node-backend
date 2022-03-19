@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 // Controlador
-const StorageController = require('../controllers/Storage');
+const StorageController = require('../../controllers/Storage');
 // Middleware
-const uploadMiddleware = require('../utils/HandleStorage');
+const uploadMiddleware = require('../../utils/HandleStorage');
 
 // Rutas
 router.post(

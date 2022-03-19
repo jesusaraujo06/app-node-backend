@@ -4,7 +4,7 @@
 
 const express = require('express');
 const fs = require('fs');
-const router = express.Router();
+const apiRouter = express.Router();
 const pathRouter = __dirname;
 
 /**
@@ -26,14 +26,23 @@ fs.readdirSync(pathRouter).filter(file => {
 	 */
 	const skipFile = ['index'].includes(fileName);
 	if (!skipFile) {
-		router.use(`/${fileName}`, require(`./${fileName}`));
+		apiRouter.use(`/${fileName}`, require(`./${fileName}`));
 	}
 });
 
-// En caso de que no se encuentre ninguna ruta
-router.get('*', (req, res) => {
-	res.status(404);
-	res.send({ error: 'Ruta no encontrada' });
+// Ruta principal
+apiRouter.get('/', (req, res) => {
+	res.status(200);
+	res.send({
+		msg: 'Has iniciado correctamente la plantilla de backend en NodeJs, creado por Jesus Araujo, a continuación puedes empezar a contruir tu aplicación.',
+		alert: 'Estas son las rutas api: /api',
+	});
 });
 
-module.exports = router;
+// En caso de que no se encuentre ninguna ruta
+apiRouter.get('*', (req, res) => {
+	res.status(404);
+	res.send({ error: 'Ruta no encontrada desde API' });
+});
+
+module.exports = apiRouter;
