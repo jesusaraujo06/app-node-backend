@@ -13,14 +13,14 @@ const pool = mysql.createPool({
 });
 
 // Obtener una instancia envuelta en Promise
-const promisePool = pool.promise();
+const dbConnection = pool.promise();
 
 // Obtener conexión
-promisePool.getConnection((err, connection) => {
+dbConnection.getConnection((err, connection) => {
 	if (err) throw err;
 
 	if (connection) connection.release();
 	console.log('Server conectado a la DB');
 });
 
-module.exports = { promisePool, mysql };
+module.exports = { dbConnection, mysql };

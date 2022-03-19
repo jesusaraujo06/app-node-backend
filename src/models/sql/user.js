@@ -1,13 +1,13 @@
-const { promisePool, mysql } = require('../../config/database');
+const { dbConnection, mysql } = require('../../config/database');
 
-const insert = async ({ user, clave }) => {
-	const query = 'INSERT INTO usuario (user, clave) VALUES (?, ?)';
+const create = async ({ user, clave }) => {
+	const query = 'INSERT INTO users (user, clave) VALUES (?, ?)';
 	const format = mysql.format(query, [user, clave]);
-	const execute = await promisePool.query(format);
+	const execute = await dbConnection.query(format);
 
 	return execute;
 };
 
 module.exports = {
-	insert,
+	create,
 };

@@ -2,19 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 // Controlador
-const {
-	getItems,
-	getItem,
-	createItem,
-	updateItem,
-	deleteItem,
-} = require('../controllers/users');
+const UserController = require('../controllers/User');
 
 // Rutas
-router.get('/', getItems);
-router.get('/:id', getItem);
-router.post('/create', createItem);
-router.patch('/:id', updateItem);
-router.delete('/id', deleteItem);
+router.get('/', UserController.index);
+router.get('/:id', UserController.show);
+router.post('/create', UserController.store);
+router.patch('/:id', UserController.update);
+router.delete('/id', UserController.destroy);
 
 module.exports = router;

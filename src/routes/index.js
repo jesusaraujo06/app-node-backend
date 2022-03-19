@@ -3,10 +3,8 @@
  */
 
 const express = require('express');
-const router = express.Router();
 const fs = require('fs');
-
-// Obtener path del directorio
+const router = express.Router();
 const pathRouter = __dirname;
 
 /**
@@ -19,10 +17,9 @@ const removeExtension = fileName => {
 	return fileName.split('.').shift();
 };
 
-// Obtener cada archivo que se encuentre en la ruta path
+// Obtener cada archivo que se encuentre en la ruta pathRouter
 fs.readdirSync(pathRouter).filter(file => {
 	const fileName = removeExtension(file);
-
 	/**
 	 * includes() revisa si el valor que venga de fileName se encuentra en el array
 	 * Si lo encuentra retorna true, de lo contrario false.
@@ -30,11 +27,10 @@ fs.readdirSync(pathRouter).filter(file => {
 	const skipFile = ['index'].includes(fileName);
 	if (!skipFile) {
 		router.use(`/${fileName}`, require(`./${fileName}`));
-		// console.log('--->', removeExtension(fileName))
 	}
 });
 
-// Si no se encuentra ninguna ruta
+// En caso de que no se encuentre ninguna ruta
 router.get('*', (req, res) => {
 	res.status(404);
 	res.send({ error: 'Ruta no encontrada' });
