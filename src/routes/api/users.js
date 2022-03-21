@@ -5,31 +5,20 @@ const router = express.Router();
 const UserController = require('../../controllers/User');
 
 // Middleware
-const {
-	validatorStore,
-	validatorShow,
-} = require('../../validators/user');
+const { validatorStore } = require('../../validators/user');
+const { validatorId } = require('../../validators/main');
 
 // const customHeader = require('../../middlewares/customHeader');
 
 // Rutas
 router.get('/', UserController.index);
-router.get('/:id', validatorShow, UserController.show);
-router.post(
-	'/create',
-	validatorStore,
-	UserController.store
-);
-router.put(
-	'/:id',
-	validatorShow,
-	validatorStore,
-	UserController.update
-);
-router.delete(
-	'/:id',
-	validatorShow,
-	UserController.destroy
-);
+
+router.get('/:id', validatorId, UserController.show);
+
+router.post('/create', validatorStore, UserController.store);
+
+router.put('/:id', validatorId, validatorStore, UserController.update);
+
+router.delete('/:id', validatorId, UserController.destroy);
 
 module.exports = router;

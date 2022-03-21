@@ -57,10 +57,7 @@ const update = async (req, res) => {
 	try {
 		// De un objeto creamos dos objetos, uno que solo va a tener el id y otro que tendra el resto de elementos del objeto
 		const { id, ...body } = matchedData(req);
-		const result = await UserModel.findOneAndUpdate(
-			id,
-			body
-		);
+		const result = await UserModel.update(id, body);
 		res.send({ result });
 	} catch (err) {
 		httpError(res, 'ERROR_CREATE_ITEM', 403);
@@ -76,7 +73,7 @@ const destroy = async (req, res) => {
 	try {
 		const body = matchedData(req);
 		const { id } = body;
-		// Con deleteOne se hará un borrado logico, para destruir un registro utilizar destroy()
+		// Con deleteOne se hará un borrado logico, para destruir un registro utilizar remove()
 		const result = await UserModel.deleteOne(id);
 		res.send({ result });
 	} catch (err) {

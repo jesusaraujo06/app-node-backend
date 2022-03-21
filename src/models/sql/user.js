@@ -1,64 +1,64 @@
-const {
-	dbConnection,
-	mysql,
-} = require('../../config/database');
+const db = require('./main');
 
-const { table, notDeleted } = {
+// Constantes del modelo
+const { table, cols } = {
 	table: 'users',
-	notDeleted: 'deleted = 0',
+	cols: ['user', 'clave'],
 };
 
+/**
+ * Obtener todos los registros de una tabla
+ */
 const all = async () => {
-	const query = `SELECT * FROM ${table} WHERE ${notDeleted}`;
-	const format = mysql.format(query);
-	const [rows, fields] = await dbConnection.query(format);
-	return rows;
+	return await db.all(table);
 };
 
+/**
+ * Obtener un registro basado en id de una tabla
+ * @param {*} string
+ */
 const find = async id => {
-	const query = `SELECT * FROM ${table} WHERE id = ? and ${notDeleted}`;
-	const format = mysql.format(query, [id]);
-	const [rows, fields] = await dbConnection.query(format);
-	return rows;
+	return await db.find(table, id);
 };
 
-const create = async ({ user, clave }) => {
-	const query = `INSERT INTO ${table} (user, clave) VALUES (?, ?)`;
-	const format = mysql.format(query, [user, clave]);
-	const [rows, fields] = await dbConnection.query(format);
-	return rows;
+/**
+ * Crear un registro en una tabla
+ * @param {*} object
+ */
+const create = async values => {
+	return await db.create(table, cols, values);
 };
 
-const findOneAndUpdate = async (id, { user, clave }) => {
-	const query = `UPDATE ${table} SET user = ?, clave = ? WHERE id = ? and ${notDeleted}`;
-	const format = mysql.format(query, [user, clave, id]);
-	const [rows, fields] = await dbConnection.query(format);
-	return rows;
+/**
+ * Actualizar un registro de una tabla
+ * @param {id} string
+ * @param {values} object
+ */
+const update = async (id, values) => {
+	return await db.update(table, cols, id, values);
 };
 
+/**
+ * Eliminar un registro de forma logica de una tabla
+ * @param {*} string
+ */
 const deleteOne = async id => {
-	const query = `UPDATE ${table} SET deleted = ? WHERE id = ?`;
-	const format = mysql.format(query, [1, id]);
-	const [rows, fields] = await dbConnection.query(format);
-	return rows;
+	return await db.deleteOne(table, id);
 };
 
+/**
+ * Eliminar un registro de forma permanente de una tabla
+ * @param {*} string
+ */
 const destroy = async id => {
-	const query = 'DELETE FROM users WHERE id = ?';
-	const format = mysql.format(query, [id]);
-	const [rows, fields] = await dbConnection.query(format);
-	return rows;
+	return await db.remove(table, id);
 };
-
-// function create({ user, clave }) {
-// 	return 'Registro listo';
-// }
 
 module.exports = {
 	all,
 	find,
 	create,
-	findOneAndUpdate,
+	update,
 	deleteOne,
 	destroy,
 };
