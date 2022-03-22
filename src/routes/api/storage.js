@@ -6,9 +6,10 @@ const StorageController = require('../../controllers/Storage');
 // Middleware
 const uploadMiddleware = require('../../utils/HandleStorage');
 const { validatorId } = require('../../validators/main');
+const { authMiddleware } = require('../../middlewares/session');
 
 // Rutas
-router.get('/', StorageController.index);
+router.get('/', authMiddleware, StorageController.index);
 
 router.get('/:id', validatorId, StorageController.show);
 

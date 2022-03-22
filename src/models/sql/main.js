@@ -95,4 +95,6 @@ module.exports = {
 	update,
 	deleteOne,
 	remove,
+	dbConnection,
+	mysql,
 };

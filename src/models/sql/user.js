@@ -1,9 +1,10 @@
 const db = require('./main');
 
 // Constantes del modelo
-const { table, cols } = {
+const { table, cols, notDeleted } = {
 	table: 'users',
 	cols: ['user', 'clave'],
+	notDeleted: 'deleted = 0',
 };
 
 /**
@@ -19,6 +20,17 @@ const all = async () => {
  */
 const find = async id => {
 	return await db.find(table, id);
+};
+
+/**
+ * Obtener un registro basado el usuario de una tabla
+ * @param {*} string
+ */
+const findOne = async user => {
+	const query = `SELECT * FROM ${table} WHERE user = ? and ${notDeleted}`;
+	const format = db.mysql.format(query, [user]);
+	const [rows, fields] = await db.dbConnection.query(format);
+	return rows;
 };
 
 /**
@@ -61,4 +73,5 @@ module.exports = {
 	update,
 	deleteOne,
 	destroy,
+	findOne,
 };
